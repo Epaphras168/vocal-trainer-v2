@@ -1,0 +1,122 @@
+{
+  "theme": "dark",
+  "archetype": "Calm Aurora / Acoustic Precision",
+  "typography": {
+    "heading_font": "Plus Jakarta Sans, Outfit, sans-serif",
+    "body_font": "Plus Jakarta Sans, sans-serif",
+    "mono_font": "JetBrains Mono, monospace",
+    "google_fonts_url": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap",
+    "scale": {
+      "h1": "text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight",
+      "h2": "text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight",
+      "h3": "text-xl sm:text-2xl font-semibold",
+      "h4": "text-lg sm:text-xl font-medium",
+      "body": "text-sm sm:text-base leading-relaxed text-slate-300",
+      "caption": "text-xs font-mono tracking-wider uppercase text-emerald-400/80"
+    }
+  },
+  "colors": {
+    "background": "#070b14",
+    "background_secondary": "#0d1527",
+    "card_surface": "#111c33",
+    "card_border": "rgba(45, 212, 191, 0.15)",
+    "primary": "#2dd4bf",
+    "primary_glow": "rgba(45, 212, 191, 0.35)",
+    "accent_indigo": "#6366f1",
+    "accent_cyan": "#06b6d4",
+    "accent_aurora_gradient": "linear-gradient(135deg, #0d1527 0%, #111c33 50%, #0c1a2e 100%)",
+    "in_tune_green": "#10b981",
+    "flat_amber": "#f59e0b",
+    "sharp_rose": "#f43f5e",
+    "neutral_text": "#f8fafc",
+    "muted_text": "#94a3b8"
+  },
+  "visual_enhancers": {
+    "glassmorphism": "backdrop-blur-xl bg-slate-900/80 border border-teal-500/20 shadow-2xl shadow-teal-950/40",
+    "aurora_radial_glow": "radial-gradient(ellipse at 50% -20%, rgba(45, 212, 191, 0.15), rgba(99, 102, 241, 0.08), transparent 70%)",
+    "soundwave_canvas_bg": "#0a1120",
+    "pitch_needle_glow": "drop-shadow(0 0 10px rgba(45, 212, 191, 0.8))"
+  },
+  "navigation": {
+    "style": "Bottom Navigation Bar on Mobile / Floating Pill Glass Header on Desktop",
+    "routes": [
+      { "id": "lab", "label": "Pitch Lab", "icon": "Mic", "testId": "nav-pitch-lab" },
+      { "id": "match", "label": "Note Match", "icon": "Target", "testId": "nav-note-match" },
+      { "id": "scales", "label": "Scales", "icon": "Activity", "testId": "nav-scales" },
+      { "id": "octaves", "label": "Octaves", "icon": "Layers", "testId": "nav-octaves" },
+      { "id": "intervals", "label": "Intervals", "icon": "Music", "testId": "nav-intervals" },
+      { "id": "breath", "label": "Breathing", "icon": "Wind", "testId": "nav-breath" },
+      { "id": "songs", "label": "Song Studio", "icon": "Disc", "testId": "nav-songs" },
+      { "id": "insights", "label": "Weak Spots & Stats", "icon": "BarChart3", "testId": "nav-insights" }
+    ]
+  },
+  "modules_design": {
+    "pitch_lab": {
+      "components": "Real-time autocorrelation pitch detector canvas with rolling 3-second pitch trail, frequency Hz gauge, musical stave/note bubble indicator, volume level visualizer meter, reference tone oscillator slider",
+      "test_ids": ["pitch-lab-container", "mic-toggle-button", "live-note-display", "live-hz-display", "pitch-waveform-canvas", "pitch-cents-meter", "ref-tone-generator"]
+    },
+    "note_match": {
+      "components": "Target note player (OscillatorNode piano synth), vocal feedback ring with cents deviation indicator (-50 to +50 cents), score streak multiplier, hold-pitch accuracy ring timer",
+      "test_ids": ["note-match-container", "play-target-button", "cents-deviation-gauge", "match-score-badge", "hold-timer-progress", "next-note-button"]
+    },
+    "scales_trainer": {
+      "components": "Root note selector + Scale mode selector (Major, Natural Minor, Pentatonic, Blues, Arpeggio), sequence step visualizer with animated node beads, automatic sequence advance on pitch hold",
+      "test_ids": ["scales-trainer-container", "scale-select-root", "scale-select-type", "scale-step-beads", "start-scale-button", "scale-playback-toggle"]
+    },
+    "octave_trainer": {
+      "components": "Octave jump challenge, reference octave player, user singing target octave detector (higher/lower), visual pitch ladder with octave intervals",
+      "test_ids": ["octave-trainer-container", "octave-play-ref-button", "octave-direction-toggle", "octave-pitch-ladder", "octave-submit-check"]
+    },
+    "interval_ear_training": {
+      "components": "Interval selector checklist (Unison, Minor 2nd, Major 2nd, Minor 3rd, Major 3rd, Perfect 4th, Tritone, Perfect 5th, Minor 6th, Major 6th, Minor 7th, Major 7th, Octave), root note drone, randomized interval prompts, cents scoring",
+      "test_ids": ["interval-trainer-container", "interval-checkbox-grid", "play-root-drone-button", "current-interval-prompt", "interval-cents-meter"]
+    },
+    "breathing_exercises": {
+      "components": "Bio-organic SVG expanding/contracting breath orb with pulsing radial glow, timer circle, phase indicator (Inhale, Hold, Exhale, Hold), preset selectors (Box 4-4-4-4, Deep Warmup 4-2-6, Relaxing 4-0-8, Pranayama 4-7-8), cycle count tracker",
+      "test_ids": ["breathing-container", "breath-circle-orb", "breath-phase-text", "breath-countdown-timer", "breath-preset-box", "breath-preset-deep", "breath-preset-relax", "breath-cycle-counter", "breath-start-stop-button"]
+    },
+    "song_practice": {
+      "components": "Horizontal scrolling karaoke piano-roll canvas with pitch contour guide lines, note blocks, real-time vocal pitch trace overlaid on target melody blocks, lyric synchronizer, real-time pitch accuracy rating (Perfect, Great, Flat, Sharp)",
+      "test_ids": ["song-practice-container", "song-selector-dropdown", "song-play-pause-button", "song-piano-roll-canvas", "song-score-meter", "song-tempo-slider", "song-key-transpose-buttons"]
+    },
+    "weak_spots_dashboard": {
+      "components": "Vocal range radar and range chart, flat/sharp bias breakdown by octave, hardest musical intervals bar chart, weak register indicator (e.g. 'Struggles with G4-B4 passaggio transition', 'Minor 3rds sing 18 cents flat'), practice recommendations generator",
+      "test_ids": ["weak-spots-container", "range-heatmap-chart", "interval-accuracy-chart", "flat-sharp-bias-card", "recs-action-card", "practice-history-table"]
+    },
+    "onboarding_range_test": {
+      "components": "Interactive 3-step onboarding: 1. Audio permission & mic calibration. 2. Lowest note detection test (hum downward). 3. Highest note detection test (glide upward). Voice classification badge (Bass, Baritone, Tenor, Alto, Mezzo-Soprano, Soprano) + skill level picker",
+      "test_ids": ["onboarding-modal", "onboarding-mic-btn", "onboarding-low-note-btn", "onboarding-high-note-btn", "voice-type-badge", "skill-level-select", "complete-onboarding-btn"]
+    }
+  },
+  "image_urls": [
+    {
+      "url": "https://images.unsplash.com/photo-1516280440614-37939bbacd81?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNDR8MHwxfHNlYXJjaHwxfHxzaW5nZXIlMjBtaWNyb3Bob25lJTIwbXVzaWMlMjBzdHVkaW8lMjBhY291c3RpY3xlbnwwfHx8fDE3ODgyNTkyODV8MA&ixlib=rb-4.1.0&q=85",
+      "description": "Studio microphone with soft warm lighting for onboarding hero & practice ambiance",
+      "category": "hero_and_branding"
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1482442120256-9c03866de390?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNDR8MHwxfHNlYXJjaHw0fHxzaW5nZXIlMjBtaWNyb3Bob25lJTIwbXVzaWMlMjBzdHVkaW8lMjBhY291c3RpY3xlbnwwfHx8fDE3ODgyNTkyODV8MA&ixlib=rb-4.1.0&q=85",
+      "description": "Studio condenser mic in acoustic isolation booth for pitch lab header",
+      "category": "pitch_lab_header"
+    }
+  ],
+  "pwa_requirements": {
+    "manifest": "public/manifest.json",
+    "theme_color": "#070b14",
+    "background_color": "#070b14",
+    "offline_ready": true,
+    "storage": "localStorage + IndexedDB for audio session histories and calibration profiles"
+  },
+  "audio_engine_spec": {
+    "method": "Autocorrelation algorithm with parabolic interpolation for sub-cent precision and RMS silence gating (>0.01 threshold)",
+    "synth": "Poly/Mono OscillatorNode (sine, triangle, sawtooth) with gentle ADSR envelope (attack 0.05s, release 0.2s) to prevent audio clicks",
+    "notes_table": "Standard A4=440Hz Equal Temperament with frequency-to-note and cents deviation calculations: 1200 * log2(f / f0)"
+  },
+  "general_guidelines": [
+    "Never use generic white backgrounds or standard light mode defaults; this app uses an organic dark aurora palette (#070b14 background with luminous teal #2dd4bf and indigo #6366f1 accents).",
+    "All interactive buttons and key metrics MUST have explicit data-testid attributes for testing verification.",
+    "Web Audio context must be properly initialized on user interaction (first click/tap) to comply with mobile Safari/Chrome autoplay policies.",
+    "Visual feedback must have micro-transitions (color shifts between in-tune emerald, flat amber, and sharp rose with framer-motion animations).",
+    "Keep mobile phone ergonomics first: large touch targets (min 48px), easy one-thumb controls, and clear large note text."
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "summary": "Frontend-only PWA end-to-end tested at REACT_APP_BACKEND_URL. Backend skipped per request. Verified: onboarding gate + welcome screen with mic button, PWA manifest/service worker registration, seeded dashboard, floating pill nav to all 8 modules, PitchLab (mic gate + live-note/hz/waveform/volume/cents meter + ref-tone buttons clickable), NoteMatch (mic gate + play-target + skip + score badge), Scales (root/type dropdowns with 13 root options + Hear Scale + Start Singing revealing scale-step-beads and scale-cents-meter), Octaves (direction toggle + play-ref + pitch ladder; with narrow range 60-66 shows range-too-narrow guard correctly), Intervals (12 interval checkboxes toggle + drone starts challenge + current-interval-prompt + interval-cents-meter), Breathing (all 4 presets + start toggles phase/countdown/orb/cycle animation), Song Studio (song selector + transpose wrapper + tempo slider + Start Singing + piano-roll animates + Preview Melody works), Insights (with seeded valid attempts+sessions: attempts=60, accuracy=70%, all charts render including accuracy-trend-chart, range-heatmap-chart, interval-accuracy-chart, practice-history-table; with no history shows insights-empty), Reset All Progress -> reset-confirm-btn navigates back to /onboarding. No uncaught page errors on any module during navigation.",
+  "backend_issues": { "critical": [], "minor": [] },
+  "frontend_issues": {
+    "ui_bugs": [
+      {
+        "component": "Insights (progression.js analyzeWeakSpots)",
+        "issue": "Defensive robustness: intervalData sets label = key (raw a.interval value) if the interval id isn't in INTERVALS registry. Insights then calls r.label.replace(' ', '\\n') and crashes with 'TypeError: r.label.replace is not a function' when label is not a string. Not triggered by normal app flow (recordAttempt passes string ids like 'M2', 'P5'), but any legacy/imported/malformed history entry will crash the entire Insights page.",
+        "selector": "/app/frontend/src/lib/progression.js line 106",
+        "priority": "MEDIUM"
+      },
+      {
+        "component": "Insights StatCard 'Avg Deviation'",
+        "issue": "React console warning: 'Received NaN for the children attribute'. Occurs when history contains attempts with no numeric cents field (a.avgCents becomes NaN, then `${Math.round(NaN)}¢` renders 'NaN¢'). Should coerce NaN -> 0.",
+        "selector": "/app/frontend/src/pages/Insights.js line 90 (stat-deviation)",
+        "priority": "LOW"
+      }
+    ],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [
+    "In /app/frontend/src/lib/progression.js line 106, coerce label to string: `label: meta ? meta.label : String(key)` so malformed history data cannot crash Insights.",
+    "In /app/frontend/src/pages/Insights.js line 90, guard NaN: `value={`${a.avgCents > 0 ? '+' : ''}${Math.round(a.avgCents || 0)}¢`}` to avoid React NaN warning when totals are empty."
+  ],
+  "critical_code_review_comments": [
+    "Onboarding gate + Layout + Routing pattern is clean; routes use `/lab`, `/match`, `/breath`, `/songs`, `/insights` (not `/pitch-lab`, etc.) — testing agents must use nav-* clicks not direct URL guesses.",
+    "Insights.js uses non-defensive access on r.label.replace; adding a String() cast eliminates a whole class of runtime crashes.",
+    "MicGate button is repeated on many pages (good UX consistency); consider extracting single component if not already (looks like MicGate.js is already used).",
+    "PWA manifest and service worker register cleanly; no console errors from SW.",
+    "Real-time pitch scoring (hit/hold) is not verifiable in Chromium fake-media-stream — synthetic tone doesn't cross detection thresholds. Documented as env limitation per test_credentials.md."
+  ],
+  "updated_files": [],
+  "success_rate": { "backend": "N/A (skipped)", "frontend": "~98% (all module UI + PWA + reset + narrow-range + empty-state verified; only pitch-hit real-time scoring not verifiable in automation)" },
+  "test_credentials": "None — no auth. localStorage seed pattern documented in /app/memory/test_credentials.md. Confirmed working with add_init_script.",
+  "seed_data_creation": "For Insights charts, seed vt_history_v1.attempts with fields {ts, module, targetMidi, cents:number, correct:boolean, interval:'m2'|'M2'|...|'P8'} (interval MUST be a string id from INTERVALS in /app/frontend/src/lib/audio/notes.js), and vt_history_v1.sessions with {ts,date,module,durationMs,hits,total,accuracy,avgCents}. Passing a numeric interval crashes Insights (see bug above).",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "App has no backend; only test frontend. All routes are gated by onboarding via profile.onboarded. Seed vt_profile_v1 + optional vt_history_v1 via add_init_script BEFORE first goto. Note: add_init_script re-runs on every navigation/reload, so page.evaluate localStorage changes get overwritten on reload — plan tests accordingly (new browser context per scenario, or don't reload). Real routes: /, /onboarding, /lab, /match, /scales, /octaves, /intervals, /breath, /songs, /insights (NOT /pitch-lab, /note-match). Interval field in attempts MUST be a string id ('m2','M2','m3','M3','P4','TT','P5','m6','M6','m7','M7','P8'). All modules have mic-enable-button (MicGate) that must be clicked before content renders. Chromium fake audio produces a synthetic tone that generally does NOT trigger pitch-hit detection — verify controls render/click, not real-time scoring.",
+  "rca of the issue": "N/A — no blocking bugs. Two defensive/robustness improvements noted (see ui_bugs). The Insights crash reproduces only when history contains an attempt whose `interval` is not a valid string id in the INTERVALS registry (e.g., numeric); RCA: /app/frontend/src/lib/progression.js line 106 falls back to `label: key` where `key = a.interval`, and downstream Insights.js line 51 calls `r.label.replace(...)` assuming string. Mitigation: `label: meta ? meta.label : String(key)`."
+}
