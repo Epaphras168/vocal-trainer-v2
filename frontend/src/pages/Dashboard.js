@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   Mic, Target, Activity, Layers, Music, Wind, Disc, BarChart3,
-  Flame, Sparkles, ChevronRight,
+  Flame, Sparkles, ChevronRight, Play, Timer,
 } from "lucide-react";
 import { useApp } from "@/context/AppContext";
 import { midiToName } from "@/lib/audio/notes";
@@ -68,6 +68,42 @@ export default function Dashboard() {
           </div>
         </div>
       </motion.div>
+
+      {/* primary practice path */}
+      <motion.button
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.08 }}
+        onClick={() => navigate("/quest")}
+        data-testid="dashboard-quick-quest"
+        className="w-full text-left rounded-3xl p-5 sm:p-6 relative overflow-hidden border border-teal-glow/35 bg-gradient-to-br from-teal-glow/18 via-indigo-500/10 to-transparent hover:border-teal-glow/60 transition-all group"
+      >
+        <div className="absolute -right-12 -top-16 w-48 h-48 rounded-full border border-teal-glow/20 group-hover:scale-110 transition-transform" />
+        <div className="absolute right-2 top-2 w-32 h-32 rounded-full border border-teal-glow/10" />
+        <div className="relative flex flex-col sm:flex-row sm:items-center gap-4">
+          <div className="w-12 h-12 rounded-2xl bg-teal-glow/20 border border-teal-glow/35 flex items-center justify-center shrink-0">
+            <Sparkles className="w-6 h-6 text-teal-glow" />
+          </div>
+          <div className="flex-1">
+            <div className="flex items-center gap-2 mb-1">
+              <p className="text-xs font-mono uppercase tracking-wider text-teal-glow">Quick Quest</p>
+              <span className="rounded-full bg-white/10 px-2 py-0.5 text-[10px] text-slate-300">1 min</span>
+            </div>
+            <h2 className="text-xl font-bold mb-1">Find eight notes. Build your combo.</h2>
+            <p className="text-sm text-slate-400">A fast pitch sprint for days when you want to practise without planning a lesson.</p>
+          </div>
+          <div className="flex items-center gap-2 self-start sm:self-center rounded-full bg-teal-glow px-4 py-2.5 text-sm font-semibold text-slate-900 group-hover:bg-teal-300 transition-colors">
+            <Play className="w-4 h-4" /> Start
+          </div>
+        </div>
+        <div className="relative mt-5 flex items-center gap-4 text-[11px] font-mono uppercase tracking-wide text-slate-500">
+          <span className="flex items-center gap-1.5"><Timer className="w-3.5 h-3.5 text-teal-glow" /> 60 sec</span>
+          <span className="h-1 w-1 rounded-full bg-slate-600" />
+          <span>Live pitch feedback</span>
+          <span className="h-1 w-1 rounded-full bg-slate-600" />
+          <span>Local only</span>
+        </div>
+      </motion.button>
 
       {/* recommended focus */}
       {analysis.totalAttempts >= 5 && analysis.recommendations[0] && (

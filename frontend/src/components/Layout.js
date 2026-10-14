@@ -12,11 +12,13 @@ import {
   Disc,
   BarChart3,
   Flame,
+  Sparkles,
 } from "lucide-react";
 import { useApp } from "@/context/AppContext";
 
 const NAV = [
   { to: "/", label: "Home", icon: Home, testId: "nav-home" },
+  { to: "/quest", label: "Quick Quest", icon: Sparkles, testId: "nav-quick-quest" },
   { to: "/lab", label: "Pitch Lab", icon: Mic, testId: "nav-pitch-lab" },
   { to: "/match", label: "Note Match", icon: Target, testId: "nav-note-match" },
   { to: "/scales", label: "Scales", icon: Activity, testId: "nav-scales" },

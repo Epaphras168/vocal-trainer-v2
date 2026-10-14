@@ -13,6 +13,7 @@ import Intervals from "@/pages/Intervals";
 import Breathing from "@/pages/Breathing";
 import SongStudio from "@/pages/SongStudio";
 import Insights from "@/pages/Insights";
+import QuickQuest from "@/pages/QuickQuest";
 
 function Gate({ children }) {
   const { profile } = useApp();
@@ -34,6 +35,7 @@ function AppRoutes() {
             <Layout>
               <Routes>
                 <Route path="/" element={<Dashboard />} />
+                <Route path="/quest" element={<QuickQuest />} />
                 <Route path="/lab" element={<PitchLab />} />
                 <Route path="/match" element={<NoteMatch />} />
                 <Route path="/scales" element={<Scales />} />
